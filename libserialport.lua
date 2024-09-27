@@ -142,6 +142,12 @@ ffi.metatype("struct lua_sp_port", {
 			assert(port.ptr ~= nil)
 			return sp.sp_input_waiting(port.ptr)
 		end,
+		get_port_name = function(port)
+			assert(port.ptr ~= nil)
+			local result = sp.sp_get_port_name(port.ptr)
+			assert(result ~= nil)
+			return ffi.string(result)
+		end,
 		nonblocking_read = function(port, count)
 			assert(port.ptr ~= nil)
 			local buf = ffi.new("uint8_t[?]", count)
